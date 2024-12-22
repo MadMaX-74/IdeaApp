@@ -1,5 +1,5 @@
 {
-  "name": "webapp",
+  "name": "@ideaapp/webapp",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,9 +8,14 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prettier": "prettier --log-level warn --cache --write '{src,tests}/**/*.{js,jsx,ts,tsx, json, css, scss, yml}'"
+    "prettier": "prettier --log-level warn --cache --write '{src,tests}/**/*.{js,jsx,ts,tsx, json, css, scss, yml}'",
+    "typecheck": "tsc --noEmit --project ./tsconfig.app.json"
   },
   "dependencies": {
+    "@ideaapp/server": "workspace:*",
+    "@tanstack/react-query": "^4.18.0",
+    "@trpc/client": "^10.45.2",
+    "@trpc/react-query": "^10.45.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
