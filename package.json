@@ -1,5 +1,17 @@
 {
     "name": "ideaapp",
     "private": true,
-    "version": "0.0.0"
+    "version": "0.0.0",
+    "scripts": {
+        "s": "pnpm --filter @ideaapp/server dev",
+        "w": "pnpm --filter @ideaapp/webapp dev",
+        "dev": "pnpm -r --parallel dev",
+        "build": "pnpm -r --parallel build",
+        "start": "pnpm -r --parallel start",
+        "typecheck": "concurrently 'pnpm s typecheck' 'pnpm w typecheck'",
+        "prettier": "pnpm -r --parallel prettier"
+    },
+    "devDependencies": {
+        "concurrently": "^9.1.0"
+    }
 }

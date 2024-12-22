@@ -7,11 +7,14 @@
         "dev": "ts-node-dev --rs --transpile-only --ignore-watch node_modules src/index.ts",
         "build": "rimraf dist && tsc --build ./tsconfig.json",
         "start": "node dist/index.js",
-        "typecheck": "tsc --noEmit --project ./tsconfig.json"
+        "typecheck": "tsc --noEmit --project ./tsconfig.json",
+        "prettier": "prettier --loglevel warn --cache --write 'src/**/*.{js,ts,json,yml}' '!**/{node_modules}/**/*'",
+        "prettier:prod": "prettier --loglevel warn --cache --write 'dist/**/*.{js,json,yml}' '!**/{node_modules}/**/*'"
     },
     "devDependencies": {
         "@types/express": "^5.0.0",
         "@types/node": "^22.10.2",
+        "prettier": "^3.4.2",
         "rimraf": "^6.0.1",
         "ts-node": "^10.9.2",
         "ts-node-dev": "^2.0.0",

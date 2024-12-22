@@ -8,9 +8,12 @@ app.use(cors())
 app.get('/ping', (req, res) => {
   res.send('Pong')
 })
-app.use('/trpc', trpcExpress.createExpressMiddleware({
-  router: trpcRouter,
-}))
+app.use(
+  '/trpc',
+  trpcExpress.createExpressMiddleware({
+    router: trpcRouter,
+  })
+)
 
 app.listen(8080, () => {
   console.info('Server is running on port 8080')
