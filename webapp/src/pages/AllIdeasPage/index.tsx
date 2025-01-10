@@ -13,10 +13,10 @@ export const AllIdeasPage = () => {
     <div>
       <h1>Ideas App</h1>
       <div>
-        {data!.map((idea) => (
+        {data!.ideas.map((idea) => (
           <div key={idea.id}>
             <h2><Link to={`/idea/${idea.id}`}>{idea.title}</Link></h2>
-            <p>{idea.text}</p>
+            <p>{idea.description}</p>
           </div>
         ))}
       </div>
