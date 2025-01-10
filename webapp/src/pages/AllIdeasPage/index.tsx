@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { trpc } from '../../lib/trpc'
 
 export const AllIdeasPage = () => {
@@ -14,7 +15,7 @@ export const AllIdeasPage = () => {
       <div>
         {data!.map((idea) => (
           <div key={idea.id}>
-            <h2>{idea.title}</h2>
+            <h2><Link to={`/idea/${idea.id}`}>{idea.title}</Link></h2>
             <p>{idea.text}</p>
           </div>
         ))}
