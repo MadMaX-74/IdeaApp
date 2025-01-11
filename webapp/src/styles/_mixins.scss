@@ -1,12 +1,13 @@
-@import '_variables.scss';
-@import 'include-media';
+@import 'variables';
+@import '../../node_modules/include-media/dist/include-media';
 
-@mixin link($color: $blue, $hoverColor: $dark-gray) {
+@mixin link($color: $blue, $hover-color: $dark-gray) {
     color: $color;
     transition: color 0.2s ease;
+
     &:hover,
     &:active {
-        color: $hoverColor;
+        color: $hover-color;
         transition: none;
     }
 }
@@ -14,10 +15,8 @@
 @mixin h1 {
     font-size: 30px;
     font-weight: bold;
-    margin-bottom: 20px;
 }
 @mixin h2 {
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 7px;
 }

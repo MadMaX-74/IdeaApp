@@ -1,5 +1,5 @@
-@import '../../node_modules/reset-css/sass/reset.scss';
-@import './_variables.scss';
+@import '../../node_modules/reset-css/sass/reset';
+@import './variables';
 
 html,
 body,
@@ -11,16 +11,16 @@ body,
 }
 
 body{
-    background-color: $defaultBackgroundColor;
-    color: $defaultTextColor;
-    font-family: $defaultFontFamily;
-    font-size: $defaultFontSize;
-    line-height: $defaultLineHeight;
+    background-color: $default-background-color;
+    color: $default-text-color;
+    font-family: $default-font-family;
+    font-size: $default-font-size;
+    line-height: $default-line-height;
 }
 
 *,
-*::before,
-*::after {
+*:before,
+*:after {
     box-sizing: border-box;
 }
 

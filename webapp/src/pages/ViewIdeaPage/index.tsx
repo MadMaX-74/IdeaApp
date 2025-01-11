@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
 import { trpc } from "../../lib/trpc"
 import styles from './index.module.scss'
+import { Segment } from "../../components/Segment"
 
 export const ViewIdeaPage = () => {
   const { id } = useParams() as { id: string }
@@ -16,11 +17,9 @@ export const ViewIdeaPage = () => {
     return <div>Idea not found</div>
   }
   return (
-    <div>
-      <h1 className={styles.title}>{data.idea.title}</h1>
-      <p className={styles.description}>{data.idea.description}</p>
-      <div className={styles.text} dangerouslySetInnerHTML={{ __html: data.idea.text }} />
-    </div>
+    <Segment title={data.idea.title} size={2} description={data.idea.description}>
+        <div className={styles.text} dangerouslySetInnerHTML={{ __html: data.idea.text }} />
+    </Segment>
   )
 }
 

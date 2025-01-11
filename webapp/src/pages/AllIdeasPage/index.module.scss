@@ -1,10 +1,6 @@
 @import '../../styles/variables.scss';
 @import '../../styles/mixins.scss';
 
-.title {
-    @include h1;
-}
-
 .ideas {
     .idea {
         padding: 20px;
@@ -13,14 +9,8 @@
         & + .idea {
             margin-top: 20px;
         }
-        .ideaTitle {
-            @include h2;
-            .ideaLink {
-                @include link;
-            }
-        }
-        .ideaDescription {
-            font-size: 18px;
+        .ideaLink {
+            @include link;
         }
     }
 }
