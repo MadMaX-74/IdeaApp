@@ -1,0 +1,56 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+$breakpoint: '<=900px';
+
+.layout {
+    display: flex;
+    flex-flow: row nowrap;
+    height: 100%;
+    @include media($breakpoint) {
+        flex-flow: column nowrap;
+    }
+
+    .navigations {
+        height: 100%;
+        overflow: auto;
+        flex: 0 0 200px;
+        padding: 20px 30px;
+        border-right: 1px solid $light-gray;
+        @include media($breakpoint) {
+            overflow: visible;
+            flex: 0 0 auto;
+            height: auto;
+            border-right: none;
+            border-bottom: 1px solid $light-gray;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            .menuItem {
+                &:not(:first-child) {
+                    margin-top: 5px;
+                }
+                .link {
+                    @include link;
+                }
+            }
+        }
+    }
+    .content {
+        flex: 1 1 100%;
+        padding: 20px 30px;
+        overflow: auto;
+        @include media($breakpoint) {
+            overflow: visible;
+            flex: 0 0 auto;
+            height: auto;
+        }
+    }
+}

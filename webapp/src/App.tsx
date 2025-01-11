@@ -4,6 +4,7 @@ import { AllIdeasPage } from './pages/AllIdeasPage'
 import { ViewIdeaPage } from './pages/ViewIdeaPage'
 import { getAllIdeasRoute, getViewIdeaRoute, viewIdeaRouteParams } from './lib/routes'
 import { Layout } from './components/Layout'
+import './styles/global.scss'
 
 export const App = () => {
   return (
