@@ -10,7 +10,8 @@
     "stylelint": "stylelint src/**/*.scss",
     "preview": "vite preview",
     "prettier": "prettier --log-level warn --cache --write '{src/**/*,*}.{js,jsx,ts,tsx, json, css, scss, yml}' '!**/{node_modules, dist}/**/*'",
-    "typecheck": "tsc --noEmit --project ./tsconfig.app.json"
+    "typecheck": "tsc --noEmit --project ./tsconfig.app.json",
+    "stylecheck": "sass --update -q ./src:./node_modules.cache/ ./stylecheck"
   },
   "dependencies": {
     "@ideaapp/server": "workspace:*",
