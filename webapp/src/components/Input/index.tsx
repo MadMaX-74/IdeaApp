@@ -13,6 +13,8 @@ export const Input = ({
     formik
 } : InputProps) => {
     const value = formik.values[name]
+    const error = formik.errors[name] as string | undefined
+    const touched = formik.touched[name]
     return (
         <div style={{ marginBottom: '10px' }}>
                     <label htmlFor={name}>{lable}</label>
@@ -21,7 +23,9 @@ export const Input = ({
                      id={name}
                      value={value}
                      onChange={(e) => formik.setFieldValue(name, e.target.value)}
+                     onBlur={() => formik.setFieldTouched(name, true)}
                      />
+                     {!!touched && !!error && <span style={{ color: 'red' }}>{error}</span>}
                 </div>
     )
 }
