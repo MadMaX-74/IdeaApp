@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 type Idea = {
-    id: number
+    id?: number
     title: string
     description: string
     text: string

@@ -20,6 +20,23 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      '@typescript-eslint/no-restricted-imports': [
+        'error',
+        {
+          'patterns': [{
+            "group": ['@ideaapp/backend/**'],
+            "message": "usage of backend modules not allowed."
+          }, {
+            "group": ['!@ideaapp/backend/**/'],
+            "message": "usage of backend modules not allowed."
+          },
+          {
+            "group": ['!@ideaapp/backend/**/input'],
+            "message": "usage of backend modules not allowed."
+          }],
+          'allowTypeImports': true
+        },
+      ],
     },
   }
 )
