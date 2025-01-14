@@ -24,6 +24,7 @@ export const Input = ({
                      value={value}
                      onChange={(e) => formik.setFieldValue(name, e.target.value)}
                      onBlur={() => formik.setFieldTouched(name, true)}
+                     disabled={formik.isSubmitting}
                      />
                      {!!touched && !!error && <span style={{ color: 'red' }}>{error}</span>}
                 </div>
