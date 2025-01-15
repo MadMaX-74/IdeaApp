@@ -1,0 +1,38 @@
+@use '../../styles/variables';
+@use '../../styles/mixins';
+
+.field {
+    margin-bottom: 5px;
+    &.disabled {
+        opacity: 0.5;
+    }
+    .label {
+        display: block;
+        margin-bottom: 2px;
+        font-weight: bold;
+    }
+    .input {
+        display: block;
+        width: 100%;
+        max-width: 200px;
+        padding: 7px;
+        border: 1px solid variables.$light-gray;
+        border-radius: 3px;
+        font-size: 14px;
+        outline: none;
+        &.invalid {
+            border-color: variables.$red;
+        }
+        &.disabled {
+            background-color: variables.$light-gray;
+            cursor: not-allowed;
+        }
+        &.focus {
+            border-color: variables.$blue;
+        }
+    }
+    .error {
+        color: variables.$red;
+        margin-top: 5px;
+    }
+}

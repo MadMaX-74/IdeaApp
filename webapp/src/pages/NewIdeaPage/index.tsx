@@ -24,7 +24,8 @@ export const NewIdeaPage = () => {
             setSuccessMessageVisible(true)
             setTimeout(() => { setSuccessMessageVisible(false) }, 3000)
            } catch (error: any) {
-             setErrorMessageVisible(error.message) 
+             setErrorMessageVisible(error.message)
+             setTimeout(() => { setErrorMessageVisible(null) }, 3000) 
             }
         }
     })
@@ -33,7 +34,7 @@ export const NewIdeaPage = () => {
             <form onSubmit={() => formik.handleSubmit()}>
                 <Input name='title' lable='Title' formik={formik} />
                 <Input name='description' lable='Description' formik={formik} />
-                <TextArea name='text' lable='Text' formik={formik} />
+                <TextArea name='text' lable='Text' formik={formik} maxWidth={500} />
                 {!formik.isValid && !!formik.submitCount && <p style={{ color: 'red' }}>Form is invalid</p>}
                 {successMessageVisible && <div style={{ color: 'green' }}>Idea created successfully</div>}
                 {!!errorMessageVisible && <div style={{ color: 'red' }}>{errorMessageVisible}</div>}
