@@ -17,7 +17,7 @@
         max-width: 200px;
         padding: 7px;
         border: 1px solid variables.$light-gray;
-        border-radius: 3px;
+        border-radius: variables.$border-radius-small;
         font-size: 14px;
         outline: none;
         &.invalid {

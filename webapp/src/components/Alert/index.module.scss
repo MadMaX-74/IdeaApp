@@ -1,0 +1,16 @@
+@use '../../styles/variables';
+@use '../../styles/mixins';
+
+.alert {
+    padding: 10px;
+    border-radius: variables.$border-radius-small;
+    font-size: 14px;
+    &.success {
+        background-color: #ffd1d1;
+        color: #631717;
+    }
+    &.error {
+        background-color: #d7ffd7;
+        color: #2d6d2b;
+    }
+}

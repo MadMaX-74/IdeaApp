@@ -6,6 +6,9 @@ import { withZodSchema } from 'formik-validator-zod'
 import { trpc } from '../../lib/trpc'
 import { zCreateIdeaTrpcInput } from '@ideaapp/server/src/router/createIdea/input'
 import { useState } from 'react'
+import { Alert } from '../../components/Alert'
+import { SubmitButton } from '../../components/SubmitButton'
+import { FormItems } from '../../components/FormItems'
 
 export const NewIdeaPage = () => {
     const [successMessageVisible, setSuccessMessageVisible] = useState(false)
@@ -32,15 +35,15 @@ export const NewIdeaPage = () => {
     return (
         <Segment title="New Idea">
             <form onSubmit={() => formik.handleSubmit()}>
-                <Input name='title' lable='Title' formik={formik} />
-                <Input name='description' lable='Description' formik={formik} />
-                <TextArea name='text' lable='Text' formik={formik} maxWidth={500} />
-                {!formik.isValid && !!formik.submitCount && <p style={{ color: 'red' }}>Form is invalid</p>}
-                {successMessageVisible && <div style={{ color: 'green' }}>Idea created successfully</div>}
-                {!!errorMessageVisible && <div style={{ color: 'red' }}>{errorMessageVisible}</div>}
-                <button disabled={!formik.isSubmitting} type='submit'>
-                    {formik.isSubmitting ? 'Submitting...' : 'Create Idea'}
-                </button>
+                <FormItems>
+                    <Input name='title' lable='Title' formik={formik} />
+                    <Input name='description' lable='Description' formik={formik} />
+                    <TextArea name='text' lable='Text' formik={formik} maxWidth={500} />
+                    {!formik.isValid && !!formik.submitCount && <p style={{ color: 'red' }}>Form is invalid</p>}
+                    {successMessageVisible && <Alert color='green'>Idea created successfully</Alert>}
+                    {!!errorMessageVisible && <Alert color='red'>{errorMessageVisible}</Alert>}
+                    <SubmitButton loading={formik.isSubmitting}>Create Idea</SubmitButton>
+                </FormItems>
             </form>
         </Segment>
     )
