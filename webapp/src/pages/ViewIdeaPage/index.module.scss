@@ -1,6 +1,12 @@
 @import '../../styles/variables.scss';
 @import '../../styles/mixins.scss';
 
+.createdAt {
+    font-size: 12px;
+    color: $gray;
+    margin-bottom: 10px;
+}
+
 .text {
     font-size: 14px;
     & > *:not(:first-child) {

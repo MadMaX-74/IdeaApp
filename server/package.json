@@ -4,7 +4,7 @@
     "private": true,
     "type": "commonjs",
     "scripts": {
-        "dev": "ts-node-dev --rs --watch ./.env --ignore-watch node_modules src/index.ts",
+        "dev": "ts-node-dev --rs --watch ./.env --exit-child --ignore-watch node_modules src/index.ts",
         "build": "rimraf dist && tsc --build ./tsconfig.json",
         "start": "node dist/index.js",
         "typecheck": "tsc --noEmit --project ./tsconfig.json",
@@ -15,8 +15,8 @@
         "prepare": "pnpm pgc"
     },
     "prisma": {
-"schema": "./src/prisma/schema.prisma"
-},
+        "schema": "./src/prisma/schema.prisma"
+    },
     "devDependencies": {
         "@types/express": "^5.0.0",
         "@types/lodash": "^4.17.14",

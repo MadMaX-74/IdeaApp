@@ -12,4 +12,5 @@ model Idea {
     title   String
     description String
     text     String
+    createdAt DateTime @default(now())
 }

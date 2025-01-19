@@ -8,6 +8,9 @@ export const getIdeasTrpcRoute = trpc.procedure
                 id: true,
                 title: true,
                 description: true
+            },
+            orderBy: {
+                createdAt: 'desc'
             }
         })
         return { ideas }
