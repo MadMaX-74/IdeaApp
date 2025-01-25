@@ -3,6 +3,8 @@ import { trpcRouter } from './router'
 import cors from 'cors'
 import { applyTrpcToExpressApp } from './lib/trpc'
 import { AppContext, createAppContext } from './lib/ctx'
+import { applyPassportToExpressApp } from './lib/passport'
+import { env } from './lib/env'
 
 (async () => {
   let ctx: AppContext | null = null
@@ -13,9 +15,10 @@ import { AppContext, createAppContext } from './lib/ctx'
     app.get('/ping', (req, res) => {
       res.send('Pong')
     })
-    applyTrpcToExpressApp(app, ctx, trpcRouter)
-    app.listen(8080, () => {
-      console.info('Server is running on port 8080')
+    applyPassportToExpressApp(app, ctx)
+    await applyTrpcToExpressApp(app, ctx, trpcRouter)
+    app.listen(env.PORT, () => {
+      console.info('Server is running on port ' + env.PORT)
     })
   } catch (e) {
     console.error(e)
