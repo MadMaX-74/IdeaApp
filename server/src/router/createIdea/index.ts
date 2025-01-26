@@ -6,8 +6,11 @@ export const createIdeaTrpcRoute = trpc.procedure
     zCreateIdeaTrpcInput
   )
   .mutation(async ({ ctx, input }) => {
+    if (!ctx.user) {
+      throw new Error('User not found')
+    }
     await ctx.prisma.idea.create({
-      data: input
+      data: {...input, authorId: ctx.user.id}
     })
     return { success: true }
   });

@@ -20,6 +20,7 @@ export const ViewIdeaPage = () => {
   return (
     <Segment title={data.idea.title} size={2} description={data.idea.description}>
         <div className={styles.createdAt}>Created at: {format(data.idea.createdAt, 'dd.MM.yyyy HH:mm:ss')}</div>
+        <div className={styles.author}>Author: {data.idea.author.nick}</div>
         <div className={styles.text} dangerouslySetInnerHTML={{ __html: data.idea.text }} />
     </Segment>
   )
