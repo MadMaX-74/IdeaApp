@@ -2,9 +2,6 @@ import { useNavigate, useParams } from "react-router-dom"
 import { getViewIdeaRoute, UpdateIdeaRouteParams } from "../../lib/routes"
 import { trpc } from "../../lib/trpc"
 import { TrpcRouterOutput } from "@ideaapp/server/src/router"
-import { useState } from "react"
-import { useFormik } from "formik"
-import { withZodSchema } from "formik-validator-zod"
 import { zUpdateIdeaTrpcInput } from "@ideaapp/server/src/router/updateIdea/input"
 import { Segment } from "../../components/Segment"
 import { FormItems } from "../../components/FormItems"
@@ -12,29 +9,27 @@ import { Input } from "../../components/Input"
 import { TextArea } from "../../components/Textarea"
 import { Alert } from "../../components/Alert"
 import { SubmitButton } from "../../components/SubmitButton"
+import { useForm } from "../../lib/form"
 
 
 
 const EditIdeaComponent: React.FC<{ idea: NonNullable<TrpcRouterOutput ['getIdea'] [' idea' ]>} > = ({ idea }) => {
     const navigate = useNavigate()
-    const [showError, setShowError] = useState(false)
     const updateIdea = trpc.updateIdea.useMutation()
-    const formik = useFormik({
+    const {formik, buttonProps, alertProps} = useForm({
         initialValues: {
             title: idea.title,
             description: idea.description,
             text: idea.text
         },
-        validate: withZodSchema(zUpdateIdeaTrpcInput.omit({ ideaId: true })),
+        validationSchema: zUpdateIdeaTrpcInput.omit({ ideaId: true }),
         onSubmit: async (values) => {
-            try {
-                setShowError(false)
-                await updateIdea.mutateAsync({ ideaId: idea.id, ...values })
+            await updateIdea.mutateAsync({ ideaId: idea.id, ...values })
                 navigate(getViewIdeaRoute({ id: idea.id }), { replace: true })
-            } catch (error: any) {
-                setShowError(true)
-            }
-        }
+        },
+        resetOnSuccess: false,
+        showValidationAlert: true
+
     })
     return (
         <Segment title={`Edit idea: ${idea.title}`}>
@@ -43,8 +38,8 @@ const EditIdeaComponent: React.FC<{ idea: NonNullable<TrpcRouterOutput ['getIdea
                     <Input label="Title" name="title" formik={formik} />
                     <Input label="Description" name="description" formik={formik} />
                     <TextArea label="Text" name="text" formik={formik} maxWidth={500} />
-                    {showError && <Alert color='red'>Error updating idea</Alert>}
-                    <SubmitButton loading={formik.isSubmitting}>Update Idea</SubmitButton>
+                    <Alert {...alertProps} />
+                    <SubmitButton {...buttonProps} >Update Idea</SubmitButton>
                 </FormItems>
             </form>
         </Segment>
