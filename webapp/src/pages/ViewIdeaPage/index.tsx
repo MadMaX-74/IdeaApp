@@ -3,29 +3,22 @@ import { trpc } from "../../lib/trpc"
 import styles from './index.module.scss'
 import { Segment } from "../../components/Segment"
 import { format } from "date-fns"
-import { getUpdateIdeaRoute } from "../../lib/routes"
+import { getUpdateIdeaRoute, ViewIdeaRouteParams } from "../../lib/routes"
 import { LinkButton } from "../../components/LinkButton"
-import { useMy } from "../../lib/ctx"
+import { withPageWrapper } from "../../lib/pageWrapper"
 
-export const ViewIdeaPage = () => {
-  const { id } = useParams() as { id: string }
-
-  const { data, error, isLoading, isFetching, isError } = trpc.getIdea.useQuery({ id })
-  const my = useMy()
-
-  if (isLoading || isFetching) {
-    return <div>Loading...</div>
-  }
-  if (isError) {
-    return <div>Error: {error.message}</div>
-  }
-  if (!my) {
-    return <div>Only for authorized users</div>
-  }
-  if (!data?.idea) {
-    return <div>Idea not found</div>
-  }
-  const idea = data.idea
+export const ViewIdeaPage = withPageWrapper({
+  useQuery: () => {
+    const { id } = useParams() as ViewIdeaRouteParams
+    return trpc.getIdea.useQuery({ id })
+  },
+  checkExists: ({ queryResult }) => !queryResult.data.idea,
+  checkExistMessage: 'Idea not found',
+  setProps: ({ queryResult, ctx }) => ({
+    idea: queryResult?.data.idea!,
+    my: ctx.my
+  })
+})(({ idea, my }) => {
   return (
     <Segment title={idea.title} size={2} description={idea.description}>
         <div className={styles.createdAt}>Created at: {format(idea.createdAt, 'dd.MM.yyyy HH:mm:ss')}</div>
@@ -38,5 +31,5 @@ export const ViewIdeaPage = () => {
         )}
     </Segment>
   )
-}
+})
 

@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { getViewIdeaRoute, UpdateIdeaRouteParams } from "../../lib/routes"
 import { trpc } from "../../lib/trpc"
-import { TrpcRouterOutput } from "@ideaapp/server/src/router"
 import { zUpdateIdeaTrpcInput } from "@ideaapp/server/src/router/updateIdea/input"
 import { Segment } from "../../components/Segment"
 import { FormItems } from "../../components/FormItems"
@@ -10,11 +9,23 @@ import { TextArea } from "../../components/Textarea"
 import { Alert } from "../../components/Alert"
 import { SubmitButton } from "../../components/SubmitButton"
 import { useForm } from "../../lib/form"
-import { useMy } from "../../lib/ctx"
+import { withPageWrapper } from "../../lib/pageWrapper"
 
-
-
-const EditIdeaComponent: React.FC<{ idea: NonNullable<TrpcRouterOutput ['getIdea'] [' idea' ]>} > = ({ idea }) => {
+export const EditIdeaPage = withPageWrapper ({
+    authorizedOnly: true,
+    useQuery: () => {
+        const ideaId = useParams() as UpdateIdeaRouteParams
+        return trpc.getIdea.useQuery({ id: ideaId.ideaId})
+    },
+    checkExists: ({ queryResult }) => !queryResult?.data.idea,
+    checkExistMessage: 'Idea not found',
+    checkAccess: ({ queryResult, ctx }) => !!ctx.my && ctx.my.id === queryResult?.data.idea?.authorId,
+    checkAccessMessage: 'You can only edit your own ideas',
+    setProps: ({ queryResult }) => ({
+        idea: queryResult?.data.idea!
+    })
+})
+(({ idea }) => {
     const navigate = useNavigate()
     const updateIdea = trpc.updateIdea.useMutation()
     const {formik, buttonProps, alertProps} = useForm({
@@ -45,31 +56,4 @@ const EditIdeaComponent: React.FC<{ idea: NonNullable<TrpcRouterOutput ['getIdea
             </form>
         </Segment>
     )
-}
-
-export const EditIdeaPage = () => {
-    const params = useParams() as UpdateIdeaRouteParams
-
-    const getIdeasResult = trpc.getIdea.useQuery({ id: params.ideaId })
-    const my = useMy()
-
-    if (getIdeasResult.isFetching || getIdeasResult.isLoading) {
-        return <div>Loading...</div>
-    }
-    if (getIdeasResult.isError) {
-        return <div>Error: {getIdeasResult.error.message}</div>
-    }
-    if (!getIdeasResult.data?.idea) {
-        return <div>Idea not found</div>
-    }
-    const idea = getIdeasResult.data.idea
-    if (!my) {
-        return <div>Only for authorized users</div>
-    }
-    if (my.id !== idea.authorId) {
-        return <div>Only author can edit the idea</div>
-    }
-
-    return <EditIdeaComponent idea={idea} />
-
-}
+})
