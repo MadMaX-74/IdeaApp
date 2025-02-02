@@ -10,6 +10,7 @@ import { TextArea } from "../../components/Textarea"
 import { Alert } from "../../components/Alert"
 import { SubmitButton } from "../../components/SubmitButton"
 import { useForm } from "../../lib/form"
+import { useMy } from "../../lib/ctx"
 
 
 
@@ -50,22 +51,18 @@ export const EditIdeaPage = () => {
     const params = useParams() as UpdateIdeaRouteParams
 
     const getIdeasResult = trpc.getIdea.useQuery({ id: params.ideaId })
-    const getMy = trpc.getMy.useQuery()
+    const my = useMy()
 
-    if (getMy.isFetching || getIdeasResult.isFetching || getMy.isLoading || getIdeasResult.isLoading) {
+    if (getIdeasResult.isFetching || getIdeasResult.isLoading) {
         return <div>Loading...</div>
     }
     if (getIdeasResult.isError) {
         return <div>Error: {getIdeasResult.error.message}</div>
     }
-    if (getMy.isError) {
-        return <div>Error: {getMy.error.message}</div>
-    }
     if (!getIdeasResult.data?.idea) {
         return <div>Idea not found</div>
     }
     const idea = getIdeasResult.data.idea
-    const my = getMy.data.my
     if (!my) {
         return <div>Only for authorized users</div>
     }

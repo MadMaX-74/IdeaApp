@@ -1,10 +1,10 @@
 import { Link, Outlet } from "react-router-dom"
 import { getAllIdeasRoute, getLogOutRoute, getNewIdeaRoute, getSignUpRoute } from "../../lib/routes"
 import style from './index.module.scss'
-import { trpc } from "../../lib/trpc"
+import { useMy } from "../../lib/ctx"
 
 export const Layout = () => {
-    const { data, isLoading, isError, isFetching } = trpc.getMy.useQuery()
+    const my = useMy()
     return (
         <div className={style.layout}>
             <div className={style.navigations}>
@@ -13,13 +13,13 @@ export const Layout = () => {
                     <li className={style.menuItem}>
                         <Link className={style.link} to={getAllIdeasRoute()}>All Ideas</Link>
                     </li>
-                    { isLoading || isFetching || isError ? null : data.my? (
+                    {my? (
                     <>
                         <li className={style.menuItem}>
                             <Link className={style.link} to={getNewIdeaRoute()}>New Idea</Link>
                         </li>
                         <li className={style.menuItem}>
-                        <Link className={style.link} to={getLogOutRoute()}>Log Out ({data.my.nick})</Link>
+                        <Link className={style.link} to={getLogOutRoute()}>Log Out ({my.nick})</Link>
                         </li>
                     </>
                     ) : (

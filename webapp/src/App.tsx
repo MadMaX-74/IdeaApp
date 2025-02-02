@@ -10,10 +10,12 @@ import { SignUpPage } from './pages/SignUpPage'
 import { SignInPage } from './pages/SignInPage'
 import { LogOutPage } from './pages/LogOutPage'
 import { EditIdeaPage } from './pages/EditIdeaPage'
+import { AppContextProvider } from './lib/ctx'
 
 export const App = () => {
   return (
     <TrpcProvider>
+      <AppContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -27,6 +29,7 @@ export const App = () => {
           <Route path={routes.getLogOutRoute()} element={<LogOutPage />} />
         </Routes>
       </BrowserRouter>
+      </AppContextProvider>
     </TrpcProvider>
   )
 }

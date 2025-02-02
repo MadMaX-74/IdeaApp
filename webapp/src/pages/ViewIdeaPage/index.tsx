@@ -5,30 +5,26 @@ import { Segment } from "../../components/Segment"
 import { format } from "date-fns"
 import { getUpdateIdeaRoute } from "../../lib/routes"
 import { LinkButton } from "../../components/LinkButton"
+import { useMy } from "../../lib/ctx"
 
 export const ViewIdeaPage = () => {
   const { id } = useParams() as { id: string }
 
   const { data, error, isLoading, isFetching, isError } = trpc.getIdea.useQuery({ id })
-  const getMy = trpc.getMy.useQuery()
+  const my = useMy()
 
-  if (getMy.isFetching || getMy.isLoading || getMy.isError) {
-    return <div>Loading...</div>
-  }
   if (isLoading || isFetching) {
     return <div>Loading...</div>
   }
   if (isError) {
     return <div>Error: {error.message}</div>
   }
-  if (!getMy.data?.my) {
+  if (!my) {
     return <div>Only for authorized users</div>
   }
   if (!data?.idea) {
     return <div>Idea not found</div>
   }
-
-  const my = getMy.data.my
   const idea = data.idea
   return (
     <Segment title={idea.title} size={2} description={idea.description}>
