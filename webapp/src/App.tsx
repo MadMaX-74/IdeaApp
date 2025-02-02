@@ -9,6 +9,7 @@ import { NewIdeaPage } from './pages/NewIdeaPage'
 import { SignUpPage } from './pages/SignUpPage'
 import { SignInPage } from './pages/SignInPage'
 import { LogOutPage } from './pages/LogOutPage'
+import { EditIdeaPage } from './pages/EditIdeaPage'
 
 export const App = () => {
   return (
@@ -19,6 +20,7 @@ export const App = () => {
             <Route path={routes.getAllIdeasRoute()} element={<AllIdeasPage />} />
             <Route path={routes.getViewIdeaRoute(routes.viewIdeaRouteParams)} element={<ViewIdeaPage />} />
             <Route path={routes.getNewIdeaRoute()} element={<NewIdeaPage />} />
+            <Route path={routes.getUpdateIdeaRoute(routes.updateIdeaRouteParams)} element={<EditIdeaPage />} />
             <Route path={routes.getSignUpRoute()} element={<SignUpPage />} />
             <Route path={routes.getSignInRoute()} element={<SignInPage />} />
           </Route>

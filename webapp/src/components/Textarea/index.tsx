@@ -5,7 +5,7 @@ import cn from 'classnames'
 
 type TextAreaProps = {
     name: string,
-    lable: string,
+    label: string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     formik: FormikProps<any>,
     maxWidth?: number
@@ -13,7 +13,7 @@ type TextAreaProps = {
 
 export const TextArea = ({
     name,
-    lable,
+    label,
     formik,
     maxWidth,
 } : TextAreaProps) => {
@@ -24,7 +24,7 @@ export const TextArea = ({
     const invalid = !!touched && !!error
     return (
         <div className={cn(styles.field, { [styles.disabled]: disabled })}>
-                    <label className={styles.label} htmlFor={name}>{lable}</label>
+                    <label className={styles.label} htmlFor={name}>{label}</label>
                     <textarea
                      id={name}
                      value={value}

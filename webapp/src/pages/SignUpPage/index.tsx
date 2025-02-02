@@ -52,9 +52,9 @@ export const SignUpPage = () => {
         <Segment title="Sign Up">
             <form onSubmit={formik.handleSubmit} >
                 <FormItems>
-                    <Input name='nick' lable='Nick' formik={formik} />
-                    <Input name='password' lable='Password' type='password' formik={formik} />
-                    <Input name='confirmPassword' lable='Confirm Password' type='password' formik={formik} />
+                    <Input name='nick' label='Nick' formik={formik} />
+                    <Input name='password' label='Password' type='password' formik={formik} />
+                    <Input name='confirmPassword' label='Confirm Password' type='password' formik={formik} />
                     {!formik.isValid && !!formik.submitCount && <p style={{ color: 'red' }}>Form is invalid</p>}
                     {!!errorMessageVisible && <Alert color='red'>{errorMessageVisible}</Alert>}
                     <SubmitButton loading={formik.isSubmitting}>Sign Up</SubmitButton>

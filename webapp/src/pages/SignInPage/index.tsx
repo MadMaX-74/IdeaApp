@@ -39,8 +39,8 @@ export const SignInPage = () => {
         <Segment title="Sign In">
             <form onSubmit={() => formik.handleSubmit()}>
                 <FormItems>
-                    <Input name='nick' lable='Nick' formik={formik} />
-                    <Input name='password' lable='Password' formik={formik} />
+                    <Input name='nick' label='Nick' formik={formik} />
+                    <Input name='password' label='Password' formik={formik} />
                     {!formik.isValid && !!formik.submitCount && <p style={{ color: 'red' }}>Form is invalid</p>}
                 </FormItems>
                 <SubmitButton loading={formik.isSubmitting} >Sign In</SubmitButton>

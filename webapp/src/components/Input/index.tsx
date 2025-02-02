@@ -4,7 +4,7 @@ import cn from 'classnames'
 
 type InputProps = {
     name: string,
-    lable: string,
+    label: string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     formik: FormikProps<any>,
     maxWidth?: number,
@@ -13,7 +13,7 @@ type InputProps = {
 
 export const Input = ({
     name,
-    lable,
+    label,
     type = 'text',
     formik,
     maxWidth
@@ -25,7 +25,7 @@ export const Input = ({
     const invalid = !!touched && !!error
     return (
         <div className={cn(styles.field, { [styles.disabled]: disabled })}>
-            <label htmlFor={name} className={styles.label}>{lable}</label>
+            <label htmlFor={name} className={styles.label}>{label}</label>
             <input type={type}
              className={cn(styles.input, { [styles.invalid]: invalid })}
              style={{ maxWidth }}
