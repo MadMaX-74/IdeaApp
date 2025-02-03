@@ -1,5 +1,5 @@
 import { trpc } from "../../lib/trpc"
-import { zSignInTrpcInput } from "@ideaapp/server/src/router/signIn/input"
+import { zSignInTrpcInput } from "@ideaapp/server/src/router/auth/signIn/input"
 import Cookies from "js-cookie"
 import { Segment } from "../../components/Segment"
 import { FormItems } from "../../components/FormItems"

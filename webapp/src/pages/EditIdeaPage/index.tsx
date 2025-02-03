@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { getViewIdeaRoute, UpdateIdeaRouteParams } from "../../lib/routes"
 import { trpc } from "../../lib/trpc"
-import { zUpdateIdeaTrpcInput } from "@ideaapp/server/src/router/updateIdea/input"
+import { zUpdateIdeaTrpcInput } from "@ideaapp/server/src/router/ideas/updateIdea/input"
 import { Segment } from "../../components/Segment"
 import { FormItems } from "../../components/FormItems"
 import { Input } from "../../components/Input"
@@ -17,13 +17,13 @@ export const EditIdeaPage = withPageWrapper ({
         const ideaId = useParams() as UpdateIdeaRouteParams
         return trpc.getIdea.useQuery({ id: ideaId.ideaId})
     },
-    checkExists: ({ queryResult }) => !queryResult?.data.idea,
-    checkExistMessage: 'Idea not found',
-    checkAccess: ({ queryResult, ctx }) => !!ctx.my && ctx.my.id === queryResult?.data.idea?.authorId,
-    checkAccessMessage: 'You can only edit your own ideas',
-    setProps: ({ queryResult }) => ({
-        idea: queryResult?.data.idea!
-    })
+    setProps: ({ queryResult, ctx, checkAccess, checkExists }) => {
+        const idea = checkExists(queryResult.data.idea, 'Idea not found')
+        checkAccess(ctx.my?.id === idea.authorId, 'You can only edit your own ideas')
+        return {
+            idea
+        }
+    }
 })
 (({ idea }) => {
     const navigate = useNavigate()

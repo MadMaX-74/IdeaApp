@@ -4,6 +4,21 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { getAllIdeasRoute } from './routes'
 import { ErrorPageComponent } from '../components/ErrorPageComponent'
+import { NotFoundPage } from '../pages/NotFoundPage'
+
+class CheckExistError extends Error {}
+const checkExistFn = <T,>(value: T, message: string): NonNullable<T> => {
+    if (!value) {
+        throw new CheckExistError(message)
+    }
+    return value
+}
+class CheckAccessError extends Error {}
+const checkAccessFn = <T,>(value: T, message: string): void => {
+    if (!value) {
+        throw new CheckAccessError(message)
+    }
+}
 
 type Props = Record<string, any>
 type QueryResult = UseTRPCQueryResult<any, any>
@@ -14,6 +29,10 @@ type QuerySuccessResult<TQueryResults extends QueryResult> = UseTRPCQuerySuccess
 type HelperProps<TQueryResult extends QueryResult | undefined> = {
     ctx: AppContext
     queryResult: TQueryResult extends QueryResult ? QuerySuccessResult<TQueryResult>: undefined
+}
+type SetPropsProps<TQueryResult extends QueryResult | undefined> = HelperProps<TQueryResult> & {
+    checkExists: typeof checkExistFn
+    checkAccess: typeof checkAccessFn
 }
 type PageWrapperProps<TProps extends Props, TQueryResult extends QueryResult | undefined = undefined> = {
     redirectAuthorized?: boolean
@@ -31,7 +50,7 @@ type PageWrapperProps<TProps extends Props, TQueryResult extends QueryResult | u
     checkExistMessage?: string
 
     useQuery?: () => TQueryResult
-    setProps?: (helperProps: HelperProps<TQueryResult>) => TProps
+    setProps?: (setPropsProps: SetPropsProps<TQueryResult>) => TProps
     Page: React.FC<TProps>
 }
 
@@ -77,7 +96,7 @@ export const PageWrapper = <TProps extends Props = {}, TQueryResult extends Quer
     if (checkExists) {
         const notExists = checkExists(helperProps)
         if (notExists) {
-            return <ErrorPageComponent title={checkExistsTitle} message={checkExistMessage} />
+            return <NotFoundPage title={checkExistsTitle} message={checkExistMessage} />
         }
     }
     if (checkAccess) {
@@ -86,8 +105,18 @@ export const PageWrapper = <TProps extends Props = {}, TQueryResult extends Quer
         return <ErrorPageComponent title={checkAccessTitle} message={checkAccessMessage} />
         }
     }
-    const props = setProps?.(helperProps) as TProps
-    return <Page {...props} />
+    try {
+        const props = setProps?.({ ...helperProps, checkExists: checkExistFn, checkAccess: checkAccessFn }) as TProps
+        return <Page {...props} />
+    } catch (e) {
+        if (e instanceof CheckExistError) {
+            return <ErrorPageComponent title={checkExistsTitle} message={e.message || checkExistMessage} />
+        }
+        if (e instanceof CheckAccessError) {
+            return <ErrorPageComponent title={checkAccessTitle} message={e.message || checkAccessMessage} />
+        }
+        throw e
+    }
 }
 
 
