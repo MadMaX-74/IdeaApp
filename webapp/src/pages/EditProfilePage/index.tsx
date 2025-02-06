@@ -10,8 +10,8 @@ import { SubmitButton } from "../../components/SubmitButton";
 
 export const EditProfilePage = withPageWrapper({
     authorizedOnly: true,
-    setProps:({ctx}) => ({
-        my: ctx.my!
+    setProps:({getAuthorizedMy}) => ({
+        my: getAuthorizedMy()
     })
 })(({my}) => {
     const trpcUtils = trpc.useUtils()
