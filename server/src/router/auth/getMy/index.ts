@@ -1,7 +1,8 @@
 import _ from "lodash"
-import { trpc } from "../../lib/trpc"
+import { trpc } from "../../../lib/trpc"
+import { toClientMy } from "../../../lib/models"
 
 export const getMyTrpcRoute = trpc.procedure
 .query(async ({ ctx }) => {
-    return { my: ctx.user && _.pick(ctx.user, ['id', 'nick']) }
+    return { my: toClientMy(ctx.user) }
 })

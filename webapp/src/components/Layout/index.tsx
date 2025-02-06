@@ -1,5 +1,5 @@
 import { Link, Outlet } from "react-router-dom"
-import { getAllIdeasRoute, getLogOutRoute, getNewIdeaRoute, getSignInRoute, getSignUpRoute } from "../../lib/routes"
+import { getAllIdeasRoute, getEditProfileRoute, getLogOutRoute, getNewIdeaRoute, getSignInRoute, getSignUpRoute } from "../../lib/routes"
 import style from './index.module.scss'
 import { useMy } from "../../lib/ctx"
 
@@ -19,7 +19,10 @@ export const Layout = () => {
                             <Link className={style.link} to={getNewIdeaRoute()}>New Idea</Link>
                         </li>
                         <li className={style.menuItem}>
-                        <Link className={style.link} to={getLogOutRoute()}>Log Out ({my.nick})</Link>
+                            <Link className={style.link} to={getEditProfileRoute()}>Edit profile ({my.nick})</Link>
+                        </li>
+                        <li className={style.menuItem}>
+                            <Link className={style.link} to={getLogOutRoute()}>Log Out ({my.nick})</Link>
                         </li>
                     </>
                     ) : (

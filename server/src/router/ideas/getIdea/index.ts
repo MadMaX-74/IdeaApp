@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { trpc } from '../../lib/trpc'
+import { trpc } from '../../../lib/trpc'
 
 export const getIdeaTrpcRoute = trpc.procedure
 .input(
@@ -16,7 +16,8 @@ export const getIdeaTrpcRoute = trpc.procedure
             author: {
                 select: {
                     id: true,
-                    nick: true
+                    nick: true,
+                    name: true
                 }
             }
         }

@@ -1,7 +1,7 @@
-import { trpc } from '../../lib/trpc'
+import { trpc } from '../../../lib/trpc'
 import { zSignUpTrpcInput } from "./input"
-import { getPasswordHash } from '../../utils/getPasswordHash'
-import { signJwt } from '../../utils/signJwt'
+import { getPasswordHash } from '../../../utils/getPasswordHash'
+import { signJwt } from '../../../utils/signJwt'
 
 export const signUpTrpcRoute = trpc.procedure
 .input(
