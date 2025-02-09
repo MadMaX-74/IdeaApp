@@ -8,6 +8,7 @@ import { inferRouterInputs, inferRouterOutputs } from '@trpc/server/dist/core/ty
 import { createIdeaTrpcRoute } from './ideas/createIdea'
 import { getIdeasTrpcRoute } from './ideas/getIdeas'
 import { updateProfileTrpcRoute } from './auth/updateProfile'
+import { updatePasswordTrpcRoute } from './auth/updatePassword'
 
 export const trpcRouter = trpc.router({
   getIdeas: getIdeasTrpcRoute,
@@ -17,7 +18,8 @@ export const trpcRouter = trpc.router({
   signUp: signUpTrpcRoute,
   signIn: signInTrpcRoute,
   getMy: getMyTrpcRoute,
-  updateProfile: updateProfileTrpcRoute
+  updateProfile: updateProfileTrpcRoute,
+  updatePassword: updatePasswordTrpcRoute
 })
 
 export type TrpcRouter = typeof trpcRouter
