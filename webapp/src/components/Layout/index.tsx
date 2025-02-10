@@ -2,6 +2,9 @@ import { Link, Outlet } from "react-router-dom"
 import { getAllIdeasRoute, getEditProfileRoute, getLogOutRoute, getNewIdeaRoute, getSignInRoute, getSignUpRoute } from "../../lib/routes"
 import style from './index.module.scss'
 import { useMy } from "../../lib/ctx"
+import { createRef } from "react"
+
+export const layoutContentElementRef = createRef<HTMLDivElement>()
 
 export const Layout = () => {
     const my = useMy()
@@ -37,7 +40,7 @@ export const Layout = () => {
                 )}
                 </ul>
             </div>
-            <div className={style.content}>
+            <div className={style.content} ref={layoutContentElementRef}>
                 <Outlet />
             </div>
         </div>
