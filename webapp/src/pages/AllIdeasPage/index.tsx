@@ -5,6 +5,7 @@ import { Segment } from '../../components/Segment'
 import { Alert } from '../../components/Alert'
 import  InfiniteScroll  from 'react-infinite-scroller'
 import { layoutContentElementRef } from '../../components/Layout'
+import { Loader } from '../../components/Loader'
 
 export const AllIdeasPage = () => {
   const { data, error, isLoading, isFetching, isError, hasNextPage, fetchNextPage, isFetchingNextPage, isRefetching } = trpc.getIdeas.useInfiniteQuery({
@@ -15,7 +16,7 @@ export const AllIdeasPage = () => {
 
   return (
     <Segment title="Ideas App">
-      {isLoading || isRefetching ? (<div>Loading...</div>) : isError ? (<Alert color="red">{error.message}</Alert>) : (
+      {isLoading || isFetching || isRefetching ? (<Loader type="section" />) : isError ? (<Alert color="red">{error.message}</Alert>) : (
       <InfiniteScroll
         threshold={250}
         loadMore={() => {
@@ -24,7 +25,7 @@ export const AllIdeasPage = () => {
           }
         }}
         hasMore={hasNextPage}
-        loader={<div className={styles.more} key="loader">Loading...</div>}
+        loader={<div className={styles.more} key="loader"><Loader type="section" /></div>}
         getScrollParent={() => layoutContentElementRef.current}
         useWindow={(layoutContentElementRef.current && getComputedStyle(layoutContentElementRef.current).overflow) !== 'auto'}
       >

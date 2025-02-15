@@ -22,4 +22,13 @@
     &:active {
         background-color: #39d039;
     }
+    &.loading {
+        position: relative;
+        &::after {
+            @include mixins.loader($borderWidth: 3px, $size: 20px, $color: variables.$white);
+        }
+        .text {
+            opacity: 0;
+        }
+    }
 }

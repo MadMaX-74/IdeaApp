@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { getAllIdeasRoute } from './routes'
 import { ErrorPageComponent } from '../components/ErrorPageComponent'
 import { NotFoundPage } from '../pages/NotFoundPage'
+import { Loader } from '../components/Loader'
 
 class CheckExistError extends Error {}
 const checkExistFn = <T,>(value: T, message: string): NonNullable<T> => {
@@ -84,7 +85,7 @@ export const PageWrapper = <TProps extends Props = {}, TQueryResult extends Quer
   }, [redirectNeeded, navigate])
 
   if (queryResult?.isLoading || queryResult?.isFetching || redirectNeeded) {
-    return <div>Loading...</div>
+    return <Loader type="page" />
   }
   if (queryResult?.isError) {
     return <ErrorPageComponent message={queryResult.error.message} />

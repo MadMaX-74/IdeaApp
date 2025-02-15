@@ -7,5 +7,9 @@ export type ButtonProps = {
 };
 
 export const SubmitButton = ({children, loading = false}: ButtonProps) => { 
-    return <button className={cn(styles.button)} disabled={loading} type='submit'>{loading ? 'Loading...' : children}</button>;
+    return <button className={cn({[styles.button]: true, [styles.disabled]: loading, [styles.loading]: loading})} disabled={loading} type='submit'>
+        <span className={styles.text}>
+            {children}
+        </span>
+    </button>;
 }
