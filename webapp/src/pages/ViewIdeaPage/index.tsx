@@ -6,6 +6,7 @@ import { format } from "date-fns"
 import { getUpdateIdeaRoute, ViewIdeaRouteParams } from "../../lib/routes"
 import { LinkButton } from "../../components/LinkButton"
 import { withPageWrapper } from "../../lib/pageWrapper"
+import { LikeButton } from "../../components/LikeButton"
 
 export const ViewIdeaPage = withPageWrapper({
   useQuery: () => {
@@ -15,7 +16,8 @@ export const ViewIdeaPage = withPageWrapper({
   setProps: ({ queryResult, ctx, checkExists }) => ({
     idea: checkExists(queryResult.data.idea, 'Idea not found'),
     my: ctx.my
-  })
+  }),
+  showLoaderOnFetching: false
 })(({ idea, my }) => {
   return (
     <Segment title={idea.title} size={2} description={idea.description}>
@@ -27,6 +29,21 @@ export const ViewIdeaPage = withPageWrapper({
               <LinkButton to={getUpdateIdeaRoute({ ideaId: idea.id })}>Edit</LinkButton>
             </div>
         )}
+        <div className={styles.likes}>
+          Likes: {idea.likesCount}
+          {my.id && (
+            <>
+            <br />
+            <LikeButton idea={idea} />
+            </>
+          )}
+          {my.id === idea.authorId && (
+            <div className={styles.editButton}>
+              <LinkButton to={getUpdateIdeaRoute({ ideaId: idea.id })}>Edit</LinkButton>
+            </div>
+
+          )}
+        </div>
     </Segment>
   )
 })

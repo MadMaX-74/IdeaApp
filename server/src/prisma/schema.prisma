@@ -14,6 +14,7 @@ model User {
     password String
     createdAt DateTime @default(now())
     ideas Idea[]
+    ideasLikes IdeaLike[]
 }
 
 model Idea {
@@ -25,4 +26,16 @@ model Idea {
     createdAt DateTime @default(now())
     authorId String
     author User @relation(fields: [authorId], references: [id])
+    ideasLikes IdeaLike[]
+}
+
+model IdeaLike {
+    id      String @id @default(uuid())
+    createdAt DateTime @default(now())
+    ideaId  String
+    idea Idea @relation(fields: [ideaId], references: [id])
+    userId  String
+    user User @relation(fields: [userId], references: [id])
+
+    @@unique([ideaId, userId])
 }
