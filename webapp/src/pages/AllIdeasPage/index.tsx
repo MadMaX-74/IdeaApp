@@ -3,20 +3,36 @@ import { trpc } from '../../lib/trpc'
 import styles from './index.module.scss'
 import { Segment } from '../../components/Segment'
 import { Alert } from '../../components/Alert'
+import { useDebounceValue } from 'usehooks-ts'
 import  InfiniteScroll  from 'react-infinite-scroller'
 import { layoutContentElementRef } from '../../components/Layout'
 import { Loader } from '../../components/Loader'
+import { useForm } from '../../lib/form'
+import { zGetIdeasTrpcInput } from '@ideaapp/server/src/router/ideas/getIdeas/input'
+import { Input } from '../../components/Input'
 
 export const AllIdeasPage = () => {
+  const {formik} = useForm({
+    initialValues: {
+      search: ''
+    },
+    validationSchema: zGetIdeasTrpcInput.pick({search: true})
+  })
+  const search = useDebounceValue(formik.values.search, 500)
   const { data, error, isLoading, isFetching, isError, hasNextPage, fetchNextPage, isFetchingNextPage, isRefetching } = trpc.getIdeas.useInfiniteQuery({
-    limit: 5
+    search: search[0],
   }, {
     getNextPageParam: (lastPage) => lastPage.nextCursor
   })
 
   return (
     <Segment title="Ideas App">
-      {isLoading || isFetching || isRefetching ? (<Loader type="section" />) : isError ? (<Alert color="red">{error.message}</Alert>) : (
+      <div className={styles.filter}>
+        <Input maxWidth={'100%'} name="Search" label="Search" formik={formik} />
+      </div>
+      {isLoading || isFetching || isRefetching ? (<Loader type="section" />) :
+      isError ? (<Alert color="red">{error.message}</Alert>) :
+      !data ? (<Alert color="yellow">No ideas found</Alert>) : (
       <InfiniteScroll
         threshold={250}
         loadMore={() => {
