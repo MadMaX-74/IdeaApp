@@ -21,14 +21,15 @@ export const getIdeasTrpcRoute = trpc.procedure
                     }
                 }
             },
-            where: !input.search
-                ? undefined
-                : {
+            where: {
+                blockedAt: null,
+                ...(normalizeSearch ? {
                     OR: [
-                        {title: {contains: normalizeSearch}},
-                        {description: {contains: normalizeSearch}}
+                        { title: { contains: normalizeSearch } },
+                        { description: { contains: normalizeSearch } }
                     ]
-                },
+                } : {})
+            },
             orderBy: [
                 {createdAt: 'desc'},
                 {serialNumber: 'desc'},

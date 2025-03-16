@@ -10,6 +10,7 @@ import { Alert } from "../../components/Alert"
 import { SubmitButton } from "../../components/SubmitButton"
 import { useForm } from "../../lib/form"
 import { withPageWrapper } from "../../lib/pageWrapper"
+import { canEditIdeas } from '../../../../server/src/utils/can';
 
 export const EditIdeaPage = withPageWrapper ({
     authorizedOnly: true,
@@ -19,7 +20,7 @@ export const EditIdeaPage = withPageWrapper ({
     },
     setProps: ({ queryResult, ctx, checkAccess, checkExists }) => {
         const idea = checkExists(queryResult.data.idea, 'Idea not found')
-        checkAccess(ctx.my?.id === idea.authorId, 'You can only edit your own ideas')
+        checkAccess(canEditIdeas(ctx.my, idea), 'You can only edit your own ideas')
         return {
             idea
         }

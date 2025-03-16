@@ -1,4 +1,5 @@
 import { trpc } from "../../../lib/trpc"
+import { canEditIdeas } from "../../../utils/can"
 import { zUpdateIdeaTrpcInput } from "./input"
 
 export const updateIdeaTrpcRoute = trpc.procedure
@@ -16,7 +17,7 @@ export const updateIdeaTrpcRoute = trpc.procedure
         if (!idea) {
             throw new Error('Idea not found')
         }
-        if (ctx.user.id !== idea.authorId) {
+        if (!canEditIdeas(ctx.user, idea)) {
             throw new Error('You are not the author of this idea')
         }
         await ctx.prisma.idea.update({

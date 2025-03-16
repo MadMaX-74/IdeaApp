@@ -31,4 +31,35 @@
             opacity: 0;
         }
     }
+    &.type-primary {
+        background-color: #0a980a;
+        &:hover {
+            background-color: #21b821;
+        }
+        &:active {
+            background-color: #39d039;
+        }
+    }
+    &.type-outline {
+        background-color: transparent;
+        border: 1px solid #0a980a;
+        color: #0a980a;
+        &:hover {
+            background-color: #21b821;
+            color: variables.$white;
+        }
+        &:active {
+            background-color: #39d039;
+            color: variables.$white;
+        }
+    }
+    &.type-danger {
+        background-color: #d00000;
+        &:hover {
+            background-color: #e80000;
+        }
+        &:active {
+            background-color: #ff0000;
+        }
+    }
 }
