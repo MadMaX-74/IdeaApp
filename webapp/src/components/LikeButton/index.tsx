@@ -1,6 +1,7 @@
 import type { TrpcRouterOutput } from "@ideaapp/server/src/router"
 import { trpc } from "../../lib/trpc";
 import style from './style.module.scss'
+import { Icon } from "../Icon";
 
 export const LikeButton = ({idea} : {idea: NonNullable<TrpcRouterOutput['getIdea']['idea']>}) => {
     const trpcUtils = trpc.useContext()
@@ -26,7 +27,7 @@ export const LikeButton = ({idea} : {idea: NonNullable<TrpcRouterOutput['getIdea
     return (
         <button className={style.likeButton}
             onClick={() => setIdeaLike.mutateAsync({ ideaId: idea.id, isLikeByMe: !idea.isLikeByMe })}>
-            {idea.isLikeByMe ? 'Unlike' : 'Like'}
+            <Icon size={32} className={style.likeIcon} name={idea.isLikeByMe ? 'likeFilled' : 'likeEmpty'} />
         </button>
     )
 }
