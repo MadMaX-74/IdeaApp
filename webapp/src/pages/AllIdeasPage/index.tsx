@@ -10,8 +10,12 @@ import { Loader } from '../../components/Loader'
 import { useForm } from '../../lib/form'
 import { zGetIdeasTrpcInput } from '@ideaapp/server/src/router/ideas/getIdeas/input'
 import { Input } from '../../components/Input'
+import { withPageWrapper } from '../../lib/pageWrapper'
 
-export const AllIdeasPage = () => {
+export const AllIdeasPage = withPageWrapper({
+  title: 'All Ideas',
+  isTitleExact: true
+})(() => {
   const {formik} = useForm({
     initialValues: {
       search: ''
@@ -63,4 +67,4 @@ export const AllIdeasPage = () => {
       </InfiniteScroll>)}
     </Segment>
   )
-}
+})

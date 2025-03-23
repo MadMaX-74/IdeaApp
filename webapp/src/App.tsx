@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 import { TrpcProvider } from './lib/trpc'
 import { AllIdeasPage } from './pages/AllIdeasPage'
 import { ViewIdeaPage } from './pages/ViewIdeaPage'
@@ -16,7 +17,8 @@ import { EditProfilePage } from './pages/EditProfilePage'
 
 export const App = () => {
   return (
-    <TrpcProvider>
+    <HelmetProvider>
+      <TrpcProvider>
       <AppContextProvider>
       <BrowserRouter>
         <Routes>
@@ -35,5 +37,6 @@ export const App = () => {
       </BrowserRouter>
       </AppContextProvider>
     </TrpcProvider>
+    </HelmetProvider>
   )
 }

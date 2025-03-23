@@ -73,7 +73,7 @@ export const useForm = <TZodSchema extends z.ZodTypeAny>({
             }
         }
         return {
-            hidden: false,
+            hidden: true,
             color: 'red',
             children: ""
         }

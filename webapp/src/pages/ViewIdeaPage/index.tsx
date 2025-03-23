@@ -43,7 +43,8 @@ export const ViewIdeaPage = withPageWrapper({
     idea: checkExists(queryResult.data.idea, 'Idea not found'),
     my: ctx.my
   }),
-  showLoaderOnFetching: false
+  showLoaderOnFetching: false,
+  title: ({ idea }) => `View idea: ${idea.title}`
 })(({ idea, my }) => {
   return (
     <Segment title={idea.title} size={2} description={idea.description}>
@@ -57,12 +58,6 @@ export const ViewIdeaPage = withPageWrapper({
             <br />
             <LikeButton idea={idea} />
             </>
-          )}
-          {my.id === idea.authorId && (
-            <div className={styles.editButton}>
-              <LinkButton to={getUpdateIdeaRoute({ ideaId: idea.id })}>Edit</LinkButton>
-            </div>
-
           )}
         </div>
         {canEditIdeas(my, idea) && (

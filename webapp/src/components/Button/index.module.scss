@@ -1,0 +1,65 @@
+@use '../../styles/variables';
+@use '../../styles/mixins';
+
+.button {
+    padding: 8px 15px;
+    border-radius: variables.$border-radius-small;
+    border: none;
+    background-color: #0a980a;
+    color: variables.$white;
+    cursor: pointer;
+    font-weight: bold;
+    user-select: none;
+    &:hover {
+        background-color: #21b821;
+    }
+    &:disabled {
+        background-color: #929292;
+        cursor: not-allowed;
+        pointer-events: none;
+        color: #d9d9d9;
+    }
+    &:active {
+        background-color: #39d039;
+    }
+    &.loading {
+        position: relative;
+        &::after {
+            @include mixins.loader($borderWidth: 3px, $size: 20px, $color: variables.$white);
+        }
+        .text {
+            opacity: 0;
+        }
+    }
+    &.type-primary {
+        background-color: #0a980a;
+        &:hover {
+            background-color: #21b821;
+        }
+        &:active {
+            background-color: #39d039;
+        }
+    }
+    &.type-outline {
+        background-color: transparent;
+        border: 1px solid #0a980a;
+        color: #0a980a;
+        &:hover {
+            background-color: #21b821;
+            color: variables.$white;
+        }
+        &:active {
+            background-color: #39d039;
+            color: variables.$white;
+        }
+    }
+    &.type-danger {
+        background-color: #d00000;
+        &:hover {
+            background-color: #e80000;
+        }
+        &:active {
+            background-color: #ff0000;
+        }
+    }
+}

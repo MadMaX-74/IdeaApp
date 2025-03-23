@@ -1,4 +1,3 @@
-import { create } from "lodash";
 import { trpc } from "../../../lib/trpc";
 import { zSetIdeaLikeTrpcInput } from "./input";
 

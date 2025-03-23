@@ -6,6 +6,7 @@ import { getAllIdeasRoute } from './routes'
 import { ErrorPageComponent } from '../components/ErrorPageComponent'
 import { NotFoundPage } from '../pages/NotFoundPage'
 import { Loader } from '../components/Loader'
+import { Helmet } from 'react-helmet-async'
 
 class CheckExistError extends Error {}
 const checkExistFn = <T,>(value: T, message: string): NonNullable<T> => {
@@ -40,6 +41,9 @@ type SetPropsProps<TQueryResult extends QueryResult | undefined> = HelperProps<T
 type PageWrapperProps<TProps extends Props, TQueryResult extends QueryResult | undefined = undefined> = {
   redirectAuthorized?: boolean
 
+  isTitleExact?: boolean
+  title: string | ((titleProps: HelperProps<TQueryResult> & TProps) => string)
+
   authorizedOnly?: boolean
   authorizedOnlyTitle?: string
   authorizedOnlyMessage?: string
@@ -73,6 +77,8 @@ export const PageWrapper = <TProps extends Props = {}, TQueryResult extends Quer
   showLoaderOnFetching = true,
   useQuery,
   setProps,
+  title,
+  isTitleExact = false,
   Page,
 }: PageWrapperProps<TProps, TQueryResult>) => {
   const navigate = useNavigate()
@@ -126,7 +132,14 @@ export const PageWrapper = <TProps extends Props = {}, TQueryResult extends Quer
       checkAccess: checkAccessFn,
       getAuthorizedMy: getAuthorizedMy,
     }) as TProps
-    return <Page {...props} />
+    const calculatedTitle = typeof title === 'function' ? title({...helperProps, ...props}) : title
+    const normalizedTitle = isTitleExact ? calculatedTitle : `${calculatedTitle} - Idea App`
+    return (<>
+    <Page {...props} />
+    <Helmet>
+      <title>{normalizedTitle}</title>
+    </Helmet>
+    </>)
   } catch (e) {
     if (e instanceof CheckExistError) {
       return <ErrorPageComponent title={checkExistsTitle} message={e.message || checkExistMessage} />

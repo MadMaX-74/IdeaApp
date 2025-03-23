@@ -80,11 +80,12 @@ const Password = () => {
                 <SubmitButton {...buttonProps}>Save</SubmitButton>
             </FormItems>
         </form>
-    )
+    ) 
 }
 
 export const EditProfilePage = withPageWrapper({
     authorizedOnly: true,
+    title: 'Edit Profile',
     setProps:({getAuthorizedMy}) => ({
         my: getAuthorizedMy()
     })

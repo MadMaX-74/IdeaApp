@@ -24,7 +24,8 @@ export const EditIdeaPage = withPageWrapper ({
         return {
             idea
         }
-    }
+    },
+    title: ({ idea }) => `Edit idea: ${idea.title}`
 })
 (({ idea }) => {
     const navigate = useNavigate()
